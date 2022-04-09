@@ -1,71 +1,19 @@
 import random
+import art
+import worddict
 
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-
-word_list = ["aardvark", "baboon", "camel"]
 
 # Randomly choose a word from the word_list and assign it to a variable called chosen_word.
-chosen_word = random.choice(word_list)
-print(chosen_word)
+chosen_word = random.choice(worddict.word_list)
+
 
 # Create a variable called 'lives' to keep track of the number of lives left.
 # Set 'lives' to equal 6.
 lives = 6
+
+# Import the logo from hangman_art.py and print it at the start of the game.
+print(art.logo)
+print(f"The answer is {chosen_word}")
 
 # Create an empty List called display.
 # #For each letter in the chosen_word, add a "_" to 'display'.
@@ -84,7 +32,11 @@ solved = False
 # in the chosen_word and 'display' has no more blanks ("_"). Then you can tell the user they've won.
 while not solved and lives > 0:
     # Ask the user to guess a letter and assign their answer to a variable called guess. Make guess lowercase.
-    guess = input("Guess a letter: ").lower()
+    guess = input("Guess a letter: \n").lower()
+
+    # If the user has entered a letter they've already guessed, print the letter and let them know.
+    if guess in display:
+        print(f"You've already guessed {guess}\n")
 
     # Loop through each position in the chosen_word;
     # If the letter at that position matches 'guess' then reveal that letter in the display at that position.
@@ -98,6 +50,7 @@ while not solved and lives > 0:
     # If lives goes down to 0 then the game should stop and it should print "You lose."
     if guess not in chosen_word:
         lives -= 1
+        print(f"You guessed {guess}, that is not in the word. You lose a life\n.")
         if lives == 0:
             print("You Lose")
 
@@ -112,5 +65,5 @@ while not solved and lives > 0:
         print("You win!")
 
     # print the ASCII art from 'stages' that corresponds to the current number of 'lives' the user has remaining.
-    print(stages[lives])
+    print(art.stages[lives])
 
