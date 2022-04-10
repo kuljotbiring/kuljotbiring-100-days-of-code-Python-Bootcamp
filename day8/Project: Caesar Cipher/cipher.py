@@ -20,7 +20,25 @@ def encrypt(txt, shft):
         message.append(alphabet[index + shft])
     # change list to string and print it
     message = ''.join(message)
-    print(message)
+    print(f"The encoded message is: {message}")
+
+
+def decrypt(txt, shft):
+    message = []
+    for char in range(len(txt)):
+        # find the index in alphabet that the current index of the character is located
+        index = alphabet.index(txt[char])
+        # if index goes beyond alphabet range of 0, go to the back of alphabet list
+        if index - shft <= -1:
+            index = (index - shft) + 26
+            # add to message, the letter shifted x spaces over in alphabet
+            message.append(alphabet[index])
+        else:
+            # add to message, the letter shifted x spaces over in alphabet
+            message.append(alphabet[index - shft])
+    # change list to string and print it
+    message = ''.join(message)
+    print(f"The decoded message is: {message}")
 
 # TODO-2: Inside the 'encrypt' function, shift each letter of the 'text' forwards in the alphabet by the shift amount and
 # print the encrypted text.
@@ -39,4 +57,9 @@ def encrypt(txt, shft):
 # message.
 
 
-encrypt(text, shift)
+if direction == "encode":
+    encrypt(text, shift)
+elif direction == "decode":
+    decrypt(text, shift)
+else:
+    print("You did not select a proper choice. Re-run the program and try again")
