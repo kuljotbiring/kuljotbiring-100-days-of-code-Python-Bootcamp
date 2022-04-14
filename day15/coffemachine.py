@@ -44,9 +44,9 @@ def sufficient(ingredients, item, drink):
     lack_of = ""
     # check if enough to make expresso
     if drink == "espresso":
-        if item[drink]["water"] > ingredients["water"]:
+        if item[drink]["ingredients"]["water"] > ingredients["water"]:
             lack_of = "water"
-        if item[drink]["coffee"] > ingredients["coffee"]:
+        if item[drink]["ingredients"]["coffee"] > ingredients["coffee"]:
             lack_of = "coffee"
     # check if enough to make latte
     elif drink == "latte":
