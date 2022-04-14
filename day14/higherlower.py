@@ -19,17 +19,26 @@ def set_match(dict_list):
     return list_values
 
 
+def display_match(first_pick, second_pick, versus):
+    # display the match up
+    print(f"Compare A: {first_pick[0]}, a {first_pick[2]}, from {first_pick[3]}")
+    print(versus)
+    print(f"Compare B: {second_pick[0]}, a {second_pick[2]}, from {second_pick[3]}")
+
+
 def play_game():
     current_score = 0
     right_answer = []
     go = True
     while go:
-        # call function to set up matches
+        # call function to set up matches. if user correct use previous correct answer as first choice
         if current_score > 0:
             first_result = right_answer
+        # other-wise pick a random item
         else:
             first_result = set_match(data)
 
+        # pick a random second item
         second_result = set_match(data)
 
         # make sure they don't match - if so choose another
@@ -37,9 +46,7 @@ def play_game():
             second_result = set_match(data)
 
         # display the match up
-        print(f"Compare A: {first_result[0]}, a {first_result[2]}, from {first_result[3]}")
-        print(vs)
-        print(f"Compare B: {second_result[0]}, a {second_result[2]}, from {second_result[3]}")
+        display_match(first_result, second_result, vs)
 
         # get user selection for which has higher IG follower account
         guess = input("Who has more followers? Type 'A' or 'B': ").lower()
@@ -63,7 +70,9 @@ def play_game():
             go = False
 
 
+# show game logo
 print(logo)
+
 play_game()
 
 
