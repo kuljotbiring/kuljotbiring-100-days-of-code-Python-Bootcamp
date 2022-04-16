@@ -22,24 +22,16 @@ def make_coffee():
             funds.report()
         else:
             # check if drink entered exist. other-wise re-prompt user
-            find_drink = menu.find_drink(drink_choice)
-            if find_drink is None:
+            user_drink = menu.find_drink(drink_choice)
+            if user_drink is None:
                 continue
-            drink = ""
-            # check what user entered and make set it to object to pass to MenuItem
-            if drink_choice == "latte":
-                drink = menu.menu[0]
-            if drink_choice == "espresso":
-                drink = menu.menu[1]
-            if drink_choice == "cappuccino":
-                drink = menu.menu[2]
             # call function to see if enough resources to make drink
-            if make_drink.is_resource_sufficient(drink):
+            if make_drink.is_resource_sufficient(user_drink):
                 # ask user for money and check if enough funds. will refund excess money
-                if not funds.make_payment(drink.cost):
+                if not funds.make_payment(user_drink.cost):
                     continue
                 # if enough money was given make drink
-                make_drink.make_coffee(drink)
+                make_drink.make_coffee(user_drink)
 
 
 # call function to run program
