@@ -20,7 +20,8 @@ tim.color("green")
 
 colors = ["red", "green", "blue", "purple", "orange", "magenta", "black", "deep sky blue", "dim gray"]
 
-
+tim.speed("fastest")
+# draw shapes
 def draw_shape(num_sides):
     angle = 360 / num_sides
     for _ in range(num_sides):
@@ -33,6 +34,13 @@ for shape_side_n in range(3, 11):
     draw_shape(shape_side_n)
 
 
+# generate random walk
+directions = [0, 90, 180, 270]
+tim.pensize(15)
+for _ in range(200):
+    tim.color(random.choice(colors))
+    tim.forward(30)
+    tim.setheading(random.choice(directions))
 
 
 
