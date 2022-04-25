@@ -34,6 +34,8 @@ while play_game:
     # detect collision with food. if collision - make new food
     if snake.head.distance(food) < 15:
         food.refresh()
+        # add a segment to the snake body
+        snake.extend()
         score_board.increase_score()
 
     # detect collision with wall

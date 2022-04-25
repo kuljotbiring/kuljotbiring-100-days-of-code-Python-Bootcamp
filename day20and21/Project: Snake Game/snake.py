@@ -18,12 +18,19 @@ class Snake:
         # make snake objects using a for loop. make 3 in a row
         # make the pieces of the snake object
         for position in STARTING_POSITIONS:
-            snake = Turtle()
-            snake.color("green")
-            snake.shape("square")
-            snake.penup()
-            snake.goto(position)
-            self.segments.append(snake)
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        snake = Turtle()
+        snake.color("green")
+        snake.shape("square")
+        snake.penup()
+        snake.goto(position)
+        self.segments.append(snake)
+
+    # adds a segment to the last position using index slicing
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         # make each of the segments move in reverse order so they move to the piece ahead of them position
