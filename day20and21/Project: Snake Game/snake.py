@@ -19,7 +19,7 @@ class Snake:
         # make the pieces of the snake object
         for position in STARTING_POSITIONS:
             snake = Turtle()
-            snake.color("white")
+            snake.color("green")
             snake.shape("square")
             snake.penup()
             snake.goto(position)
