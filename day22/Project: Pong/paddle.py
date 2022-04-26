@@ -3,9 +3,9 @@ from turtle import Turtle
 
 class Paddle(Turtle):
 
-    def __init__(self, position):
+    def __init__(self, position, color):
         super().__init__()
-        self.color("white")
+        self.color(color)
         self.shape("square")
         self.shapesize(stretch_len=1, stretch_wid=5)
         self.penup()
