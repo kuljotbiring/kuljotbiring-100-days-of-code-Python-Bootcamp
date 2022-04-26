@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import ScoreBoard
 import time
 
 # create the screen for the game
@@ -17,6 +18,8 @@ l_paddle = Paddle((-350, 0), "red")
 # create the ball object
 ball = Ball()
 
+# make a scoreboard object
+score_board = ScoreBoard()
 
 # make a key stroke listener
 screen.listen()
@@ -29,7 +32,7 @@ play_game = True
 
 while play_game:
     # pause game to slow down ball movement
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
 
@@ -45,10 +48,24 @@ while play_game:
     # detect if right paddle misses
     if ball.xcor() > 380:
         ball.reset_position()
+        # give the left side a point
+        score_board.l_point()
 
     # detect if left paddle misses
     if ball.xcor() < -380:
         ball.reset_position()
+        # give the right side a point
+        score_board.r_point()
+
+    # check winner after 10
+    if score_board.l_score == 10:
+        score_board.game_over("RED")
+        play_game = False
+    elif score_board.r_score == 10:
+        score_board.game_over("BLUE")
+        play_game = False
+    else:
+        continue
 
 # exit the screen on click
 screen.exitonclick()
