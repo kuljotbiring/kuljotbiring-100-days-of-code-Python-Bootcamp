@@ -18,6 +18,5 @@ class Player(Turtle):
 
     # function that is called when UP key is pressed moving the turtle forward 10 spaces
     def move_up(self):
-        new_y = self.ycor() + MOVE_DISTANCE
-        self.goto(self.xcor(), new_y)
+        self.forward(MOVE_DISTANCE)
 
