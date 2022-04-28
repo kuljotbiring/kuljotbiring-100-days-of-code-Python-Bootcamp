@@ -12,6 +12,9 @@ screen.tracer(0)
 # create the player turtle
 player = Player()
 
+# make a car object
+car_manager = CarManager()
+
 # listen for keyboard UP key pressed
 screen.listen()
 screen.onkey(player.move_up, "Up")
@@ -22,5 +25,7 @@ while game_is_on:
     time.sleep(0.1)
     screen.update()
 
+    car_manager.create_car()
+    car_manager.move_cars()
 
 screen.exitonclick()
