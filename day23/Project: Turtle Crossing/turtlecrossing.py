@@ -34,7 +34,9 @@ while game_is_on:
             print("TURTLE WAS SQUASHED BY A CAR!")
             game_is_on = False
 
-
+    # check if turtle has crossed the street
+    if player.has_crossed():
+        print("You are safe")
 
 
 screen.exitonclick()

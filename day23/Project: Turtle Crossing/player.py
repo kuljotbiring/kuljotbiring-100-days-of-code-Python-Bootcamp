@@ -20,3 +20,11 @@ class Player(Turtle):
     def move_up(self):
         self.forward(MOVE_DISTANCE)
 
+    # check if turtle has safely crossed the street
+    def has_crossed(self):
+        if self.ycor() > FINISH_LINE_Y:
+            self.goto(STARTING_POSITION)
+            self.setheading(90)
+            print("YOU MADE IT ACROSS THE STREET")
+            return True
+
