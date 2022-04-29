@@ -7,7 +7,7 @@ import time
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
-screen.title("Snake Game")
+screen.title("Snake Game - Press 'q' to quit")
 screen.tracer(0)
 
 snake = Snake()
@@ -20,6 +20,7 @@ screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
+
 
 # make the snake body continuously move
 play_game = True
@@ -40,16 +41,16 @@ while play_game:
 
     # detect collision with wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-        # snake has hit wall and game over
-        play_game = False
-        score_board.game_over()
+        # snake has hit wall and game over and making a new snake
+        score_board.reset()
+        snake.reset()
 
     # detect collision with tail
     for segment in snake.segments[1:]:
         # ignore the head piece
         if snake.head.distance(segment) < 10:
-            # trigger game over
-            play_game = False
-            score_board.game_over()
+            # trigger game over by resetting the score and making a new snake
+            score_board.reset()
+            snake.reset()
 
 screen.exitonclick()
