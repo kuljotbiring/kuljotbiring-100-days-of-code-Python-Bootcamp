@@ -13,18 +13,20 @@ class Player(Turtle):
         self.shape("turtle")
         self.color("black")
         self.penup()
-        self.goto(STARTING_POSITION)
-        self.setheading(90)
+        self.reset_turtle()
 
     # function that is called when UP key is pressed moving the turtle forward 10 spaces
     def move_up(self):
         self.forward(MOVE_DISTANCE)
 
+    def reset_turtle(self):
+        self.goto(STARTING_POSITION)
+        self.setheading(90)
+
     # check if turtle has safely crossed the street
     def has_crossed(self):
         if self.ycor() > FINISH_LINE_Y:
-            self.goto(STARTING_POSITION)
-            self.setheading(90)
-            print("YOU MADE IT ACROSS THE STREET")
             return True
+        else:
+            return False
 

@@ -35,8 +35,10 @@ while game_is_on:
             game_is_on = False
 
     # check if turtle has crossed the street
+    # reset the turtle and make the cars move faster by increasing their speed
     if player.has_crossed():
-        print("You are safe")
+        player.reset_turtle()
+        car_manager.increase_speed()
 
 
 screen.exitonclick()
