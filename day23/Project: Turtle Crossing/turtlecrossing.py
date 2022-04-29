@@ -15,6 +15,9 @@ player = Player()
 # make a car object
 car_manager = CarManager()
 
+# make a scoreboard object
+scoreboard = Scoreboard()
+
 # listen for keyboard UP key pressed
 screen.listen()
 screen.onkey(player.move_up, "Up")
@@ -31,12 +34,13 @@ while game_is_on:
     # check if turtle has been hit by cars
     for car in car_manager.car_fleet:
         if car.distance(player) < 20:
-            print("TURTLE WAS SQUASHED BY A CAR!")
+            scoreboard.game_over()
             game_is_on = False
 
     # check if turtle has crossed the street
     # reset the turtle and make the cars move faster by increasing their speed
     if player.has_crossed():
+        scoreboard.add_point()
         player.reset_turtle()
         car_manager.increase_speed()
 
