@@ -5,7 +5,7 @@ MOVE_DISTANCE = 10
 FINISH_LINE_Y = 280
 
 
-# inherit from the Turtle super class and start the turtle at starting positiom
+# inherit from the Turtle super class and start the turtle at starting position
 # set its attributes and have turtle facing north
 class Player(Turtle):
     def __init__(self):

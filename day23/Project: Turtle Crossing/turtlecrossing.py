@@ -28,4 +28,13 @@ while game_is_on:
     car_manager.create_car()
     car_manager.move_cars()
 
+    # check if turtle has been hit by cars
+    for car in car_manager.car_fleet:
+        if car.distance(player) < 20:
+            print("TURTLE WAS SQUASHED BY A CAR!")
+            game_is_on = False
+
+
+
+
 screen.exitonclick()
