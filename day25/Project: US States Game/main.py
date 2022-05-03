@@ -50,11 +50,13 @@ while run_game:
 
     if answer_state == "Quit":
         # make a csv to output the states not guessed
-        missed_states = []
-        # check wich states have not been guessed yet
-        for check_state in all_states:
-            if check_state not in correct_guess:
-                missed_states.append(check_state)
+        # refactored using list comprehension
+        missed_states = [check_state for check_state in all_states if check_state not in correct_guess]
+
+        # check which states have not been guessed yet
+        # for check_state in all_states:
+        #     if check_state not in correct_guess:
+        #         missed_states.append(check_state)
         # make a data frame using the missing states and write to a csv file
         new_data = pandas.DataFrame(missed_states)
         new_data.to_csv("states_to_learn.csv")
