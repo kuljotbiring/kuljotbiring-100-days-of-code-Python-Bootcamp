@@ -4,7 +4,22 @@ from tkinter import *
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+
+def save():
+    # grab the data from the fields entered
+    website = website_input.get()
+    email_username = mail_user_input.get()
+    password = password_input.get()
+
+    # open the file and insert the fields formatted
+    with open("data.txt", "a") as file:
+        file.write(f"{website} | {email_username} | {password}\n")
+
+        # delete the items in the website and password field
+        website_input.delete(0, END)
+        password_input.delete(0, END)
 # ---------------------------- UI SETUP ------------------------------- #
+
 
 # create window
 window = Tk()
@@ -38,15 +53,11 @@ password_label.grid(row=3, column=0)
 website_input = Entry(width=35)
 # Puts cursor in textbox.
 website_input.focus()
-# Adds some text to begin with.
-website_input.insert(END, "https://www.example.com")
 # place the user entry box on the grid
 website_input.grid(row=1, column=1, columnspan=2)
 
 # create entry field for the Email/Username
 mail_user_input = Entry(width=35)
-# Puts cursor in textbox.
-mail_user_input.focus()
 # Adds some text to begin with.
 mail_user_input.insert(END, "youremail@email.com")
 # place the user entry box on the grid
@@ -54,10 +65,6 @@ mail_user_input.grid(row=2, column=1, columnspan=2)
 
 # create entry field for the Password
 password_input = Entry(width=19)
-# Puts cursor in textbox.
-password_input.focus()
-# Adds some text to begin with.
-password_input.insert(END, "password")
 # place the user entry box on the grid
 password_input.grid(row=3, column=1)
 
@@ -67,7 +74,7 @@ password_button.config(text="Generate Password", highlightthickness=10)
 password_button.grid(row=3, column=2)
 
 # create button for adding password
-add_button = Button(width=36)
+add_button = Button(width=36, command=save)
 add_button.config(text="Add", highlightthickness=10)
 add_button.grid(row=4, column=1, columnspan=2)
 
