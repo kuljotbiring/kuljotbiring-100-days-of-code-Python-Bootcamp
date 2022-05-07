@@ -29,6 +29,24 @@ tomato_img = PhotoImage(file="tomato.png")
 # add image to the canvas
 canvas.create_image(100, 112, image=tomato_img)
 canvas.create_text(100, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "bold"))
-canvas.pack()
+canvas.grid(row=1, column=1)
+
+label = Label()
+label.config(text="Timer", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 50, "normal"))
+label.grid(row=0, column=1)
+
+start_button = Button()
+start_button.config(text="Start")
+start_button.grid(row=2, column=0)
+
+reset_button = Button()
+reset_button.config(text="Reset")
+reset_button.grid(row=2, column=2)
+
+check_label = Label()
+check_label.config(text="✔", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 20, "normal"))
+check_label.grid(row=3, column=1)
+
+
 
 window.mainloop()
