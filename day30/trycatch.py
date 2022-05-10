@@ -1,4 +1,11 @@
+# going over the various types of exceptions
 
+"""
+try: - something that might cause an exception
+except: - do this if there was an exception
+else: - do this if there were no exceptions
+finally: - do this no matter what happens
+"""
 # File not found
 try:
     file = open("a_file.txt")
@@ -23,9 +30,3 @@ finally:
 # TypeError
 
 
-"""
-try: - something that might cause an exception
-except: - do this if there was an exception
-else: - do this if there were no exceptions
-finally: - do this no matter what happens
-"""
