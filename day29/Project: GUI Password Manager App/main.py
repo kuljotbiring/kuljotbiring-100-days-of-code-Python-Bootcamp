@@ -27,6 +27,30 @@ def generate_password():
     password_input.insert(0, password)
     # copy the created password into the clipboard
     pyperclip.copy(password)
+
+# ---------------------------- SEARCH JSON ------------------------------- #
+
+
+def find_password():
+    # grab the data from the website field
+    website = website_input.get()
+    if website == "":
+        messagebox.showerror(title="Error", message="You must enter a website to search for.")
+    else:
+        try:
+            # open the file and insert the fields formatted
+            with open("data.json", "r") as file:
+                # read the old data
+                data = json.load(file)
+        except FileNotFoundError:
+            messagebox.showinfo(title="Error", message="No Data File Found.")
+        else:
+            if website in data:
+                email = data[website]["email"]
+                password = data[website]["password"]
+                messagebox.showinfo(title=website, message=f"Email: {email} \n Password: {password}")
+            else:
+                messagebox.showerror(title="Error", message=f"You do not have account info for {website} saved.")
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -42,7 +66,7 @@ def save():
         }
     }
 
-    # make sure any of the fields are not empty - if so show a error warning box
+    # make sure any of the fields are not empty - if so show an error warning box
     if len(website) == 0 or len(email_username) == 0 or len(password) == 0:
         messagebox.showerror(title="ERROR!", message="Please don't leave any fields empty!")
     else:
@@ -97,11 +121,11 @@ password_label.config(text="Password:", font="bold")
 password_label.grid(row=3, column=0)
 
 # create entry field for the website
-website_input = Entry(width=35)
+website_input = Entry(width=19)
 # Puts cursor in textbox.
 website_input.focus()
 # place the user entry box on the grid
-website_input.grid(row=1, column=1, columnspan=2)
+website_input.grid(row=1, column=1)
 
 # create entry field for the Email/Username
 mail_user_input = Entry(width=35)
@@ -114,6 +138,11 @@ mail_user_input.grid(row=2, column=1, columnspan=2)
 password_input = Entry(width=19)
 # place the user entry box on the grid
 password_input.grid(row=3, column=1)
+
+# create button for searching
+search_button = Button(width=14, command=find_password)
+search_button.config(text="Search", highlightthickness=10)
+search_button.grid(row=1, column=2)
 
 # create button for password generator
 password_button = Button(command=generate_password)
