@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
@@ -34,23 +35,36 @@ def save():
     website = website_input.get()
     email_username = mail_user_input.get()
     password = password_input.get()
+    new_data = {
+        website: {
+            "email": email_username,
+            "password": password,
+        }
+    }
 
     # make sure any of the fields are not empty - if so show a error warning box
     if len(website) == 0 or len(email_username) == 0 or len(password) == 0:
         messagebox.showerror(title="ERROR!", message="Please don't leave any fields empty!")
     else:
-        # other-wise see if user is ok with entries made - returns a boolean value
-        is_ok = messagebox.askokcancel(title=website, message=f"This is the detail entered: \nEmail: {email_username} "
-                                                              f"\nPassword: {password} \n Is it ok to save?")
-        # if user clicked ok append fields to a file
-        if is_ok:
+        try:
             # open the file and insert the fields formatted
-            with open("data.txt", "a") as file:
-                file.write(f"{website} | {email_username} | {password}\n")
+            with open("data.json", "r") as file:
+                # read the old data
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("data.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            # updating old data with new data
+            data.update(new_data)
 
-                # delete the items in the website and password field
-                website_input.delete(0, END)
-                password_input.delete(0, END)
+            with open("data.json", "w") as file:
+                # save/dumps the data we want into the file we specify and indented
+                json.dump(data, file, indent=4)
+        finally:
+            # delete the items in the website and password field
+            website_input.delete(0, END)
+            password_input.delete(0, END)
 # ---------------------------- UI SETUP ------------------------------- #
 
 
