@@ -1,15 +1,21 @@
 from tkinter import *
 import pandas
 import random
-import time
 
 BACKGROUND_COLOR = "#B1DDC6"
-
-# get the data frame
-data = pandas.read_csv("./data/french_words.csv")
-# convert the data frame to a dictionary
-to_learn = data.to_dict(orient="records")
 current_card = {}
+
+try:
+    # get the data frame
+    data = pandas.read_csv("./data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pandas.read_csv("./data/french_words.csv")
+    # convert the data frame to a dictionary
+    to_learn = original_data.to_dict(orient="records")
+else:
+    # convert the data frame to a dictionary
+    to_learn = data.to_dict(orient="records")
+
 
 def next_card():
     # pick a random list element from the list
@@ -25,6 +31,7 @@ def next_card():
     canvas.itemconfig(card_background, image=front_card_img)
     flip_timer = window.after(3000, func=flip_card)
 
+
 def flip_card():
     # change the title word to English
     canvas.itemconfig(card_title, text="English", fill="white")
@@ -32,6 +39,15 @@ def flip_card():
     canvas.itemconfig(card_word, text=current_card["English"], fill="white")
     # change the card image to show back of the card
     canvas.itemconfig(card_background, image=back_card_img)
+
+
+def is_known():
+    # remove the current word from the list of words
+    to_learn.remove(current_card)
+    data = pandas.DataFrame(to_learn)
+    data.to_csv("./data/words_to_learn.csv", index=False)
+    # get the next card
+    next_card()
 
 
 # create window
@@ -60,7 +76,7 @@ unknown_button.grid(row=1, column=0)
 
 # create known button
 check_image = PhotoImage(file="./images/right.png")
-known_button = Button(image=check_image, highlightthickness=0, command=next_card)
+known_button = Button(image=check_image, highlightthickness=0, command=is_known)
 known_button.grid(row=1, column=1)
 
 # start the card off with a random word
