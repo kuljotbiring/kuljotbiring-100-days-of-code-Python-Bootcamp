@@ -1,59 +1,71 @@
 import requests
 from datetime import datetime
-
-# make a get request
-response = requests.get(url="http://api.open-notify.org/iss-now.json")
-
-# will print the response code 200 is OK
-# response code 404 is not found
-# 1XX: Hold On
-# 2XX: Good
-# 3XX: Do not have permission
-# 4XX: Users Errors
-# 5XX: Server Errors
-print(response)
-
-# you can get details on the response instead of just the response object
-print(response.status_code)
-
-# handle errors using the request module to generate the exception
-response.raise_for_status()
-
-# once we are sure the request is good we can get a hold of the data returned
-data = response.json()
-print(data)
-
-# access the dictionary results to store the longitude and latitude
-longitude = data["iss_position"]["longitude"]
-latitude = data["iss_position"]["latitude"]
-
-# make a tuple of the ISS position
-iss_position = (longitude, latitude)
-
-print(iss_position)
+import smtplib
+import time
 
 MY_LAT = 38.637241
 MY_LONG = -121.512604
 
-parameters = {
-    "lat": MY_LAT,
-    "lng": MY_LONG,
-    "formatted": 0
-}
+# save your own username and password into these variables
+MY_EMAIL = "myemail@gmail.com"
+PASSWORD = "abc123"
 
-response = requests.get(url="https://api.sunrise-sunset.org/json", params=parameters)
+response = requests.get(url="http://api.open-notify.org/iss-now.json")
 response.raise_for_status()
 data = response.json()
 
-# get the sunrise and sunset from the API and then just grab the first hour using split and list indices
-sunrise = data["results"]["sunrise"].split("T")[1].split(":")[0]
-sunset = data["results"]["sunset"].split("T")[1].split(":")[0]
+iss_latitude = float(data["iss_position"]["latitude"])
+iss_longitude = float(data["iss_position"]["longitude"])
 
-print(sunrise)
-print(sunset)
 
-# use date time to get the current time
-time_now = datetime.now()
+# Your position is within +5 or -5 degrees of the ISS position.
+def is_close(MY_LAT, MY_LONG, iss_lat, iss_long):
+    if (MY_LAT - 5) <= iss_lat <= (MY_LAT + 5) <= 5 and (MY_LONG - 5) <= iss_long <= (MY_LONG + 5):
+        return True
+    else:
+        return False
 
-# only get the hour from datetime current time
-print(time_now.hour)
+
+def is_night():
+    parameters = {
+        "lat": MY_LAT,
+        "lng": MY_LONG,
+        "formatted": 0,
+    }
+
+    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+    response.raise_for_status()
+    data = response.json()
+    sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+
+    time_now = datetime.now().hour
+
+    if time_now >= sunset or time_now <= sunrise:
+        return True
+    else:
+        return False
+
+
+while True:
+    # BONUS: run the code every 60 seconds.
+    time.sleep(60)
+    # If the ISS is close to my current position
+    if is_close(MY_LAT, MY_LONG, iss_latitude, iss_longitude):
+        # and it is currently dark
+        if is_night():
+
+            # Then send myself an email to tell me to look up.
+            # create a connection using an SMTP object connecting to provider's SMTP server
+            with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+                # make the connection secure - encrypting the message
+                connection.starttls()
+                # log into the account to use
+                connection.login(user=MY_EMAIL, password=PASSWORD)
+                # now send the mail
+                connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg="Subject:ISS is located overhead"
+                                    "\n\nLook outside! The ISS is flying overhead")
+
+
+
+
