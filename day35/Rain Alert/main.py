@@ -1,10 +1,22 @@
 import requests
+import os
 from twilio.rest import Client
 
-api_key = "enter your own api key"
+"""
+To create an environment variable, go to the terminal and type:
+export NAME_OF_KEY=KeyThatYouWantToSave
+press enter
+
+import the os module
+
+to access the key in the code set it to a variable like so:
+api_key = os.environ.get("NAME_OF_KEY")
+"""
+
+api_key = os.environ.get("OWM_API_KEY")
 
 account_sid = "ENTER YOU ACCOUNT SID HERE"
-auth_token = "your_auth_token"
+auth_token = os.environ.get("AUTH_TOKEN")
 
 LAT = 38.676998
 LONG = -121.527946
