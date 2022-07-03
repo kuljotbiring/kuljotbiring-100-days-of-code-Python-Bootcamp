@@ -6,13 +6,13 @@ STOCK_NAME = "AAPL"
 COMPANY_NAME = "Apple Inc"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+NEWS_ENDPOINT = "https://newsapi.org/v2/everything?"
 
-stock_api = os.getenv("STOCK_API")
-
-url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK_NAME}&apikey={stock_api}'
-response = requests.get(url)
-data = response.json()
+stock_api = os.environ.get("STOCK_API")
+stock_url = f'{STOCK_ENDPOINT}?function=TIME_SERIES_DAILY&symbol={STOCK_NAME}&apikey={stock_api}'
+stock_response = requests.get(stock_url)
+stock_response.raise_for_status()
+stock_data = stock_response.json()
 
 
 # print(data["Time Series (Daily)"]["2022-07-01"]["4. close"])
@@ -27,12 +27,12 @@ today = date.today()
 #  [new_value for (key, value) in dictionary.items()]
 # save yesterday's date in a variable
 yesterday = today - timedelta(days=1)
-yesterday_price = float(data["Time Series (Daily)"][str(yesterday)]["4. close"])
+yesterday_price = float(stock_data["Time Series (Daily)"][str(yesterday)]["4. close"])
 
 # TODO 2. - Get the day before yesterday's closing stock price
 # save yesterday's date in a variable
 day_before_yesterday = today - timedelta(days=2)
-day_before_yesterday_price = float(data["Time Series (Daily)"][str(day_before_yesterday)]["4. close"])
+day_before_yesterday_price = float(stock_data["Time Series (Daily)"][str(day_before_yesterday)]["4. close"])
 
 # TODO 3. - Find the positive difference between 1 and 2. e.g. 40 - 20 = -20, but the positive difference is 20.
 #  Hint: https://www.w3schools.com/python/ref_func_abs.asp
@@ -49,23 +49,32 @@ if percent_change < 0:
     percent_change *= -1
 
 # TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
-if percent_change > 5:
-    print("Get News")
+significant_change = False
+
+if percent_change < 5:
+    print("Getting News...")
+    significant_change = True
 
 # # STEP 2: https://newsapi.org/
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
 
 # TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
+if significant_change:
+    news_api = os.environ.get("NEWS_API")
+    news_url = f'{NEWS_ENDPOINT}q={COMPANY_NAME}&apiKey=0bd159ebe9c040f3b3100fe8b6813ca8'
+    news_response = requests.get(news_url)
+    news_response.raise_for_status()
+    news_data = news_response.json()
 
 # TODO 7. - Use Python slice operator to create a list that contains the first 3 articles.
 #  Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
-
+    article_list = news_data["articles"][0:3]
 
 # # STEP 3: Use twilio.com/docs/sms/quickstart/python
 # to send a separate message with each article's title and description to your phone number.
 
 # TODO 8. - Create a new list of the first 3 article's headline and description using list comprehension.
-
+    headline_list = [title for source["title"] in article_list]
 # TODO 9. - Send each article as a separate message via Twilio.
 
 
