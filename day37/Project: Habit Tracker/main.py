@@ -1,8 +1,8 @@
 import requests
-import os
 
 USER_NAME = "kuljotbiring"
 TOKEN = "pixelaapipass90210"
+GRAPH_ID = "graph1"
 
 pixela_endpoint = "https://pixe.la/v1/users"
 
@@ -34,6 +34,18 @@ headers = {
     "X-USER-TOKEN": TOKEN
 }
 # make the post request
-response = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
-print(response.text)
+# response = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
+# print(response.text)
 # the graph can be viewed at https://pixe.la/v1/users/kuljotbiring/graphs/graph1.html
+
+# make a data point on the graph
+data_endpoint = f"{pixela_endpoint}/{USER_NAME}/graphs/{GRAPH_ID}"
+
+data_config = {
+    "date": "20220703",
+    "quantity": "6.25",
+}
+
+# make the post request
+response = requests.post(url=data_endpoint, json=data_config, headers=headers)
+print(response.text)
