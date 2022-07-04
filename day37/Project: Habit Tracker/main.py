@@ -62,5 +62,11 @@ new_pixel_data = {
     "quantity": "3.18"
 }
 
-response = requests.put(url=update_endpoint, json=new_pixel_data, headers=headers)
+# response = requests.put(url=update_endpoint, json=new_pixel_data, headers=headers)
+# print(response.text)
+
+# delete a pixel
+delete_endpoint = f"{pixela_endpoint}/{USER_NAME}/graphs/{GRAPH_ID}/20220703"
+
+response = requests.delete(url=delete_endpoint, headers=headers)
 print(response.text)
