@@ -52,5 +52,15 @@ data_config = {
 }
 
 # make the post request
-response = requests.post(url=data_endpoint, json=data_config, headers=headers)
+# response = requests.post(url=data_endpoint, json=data_config, headers=headers)
+# print(response.text)
+
+# PUT to update a pixel
+update_endpoint = f"{pixela_endpoint}/{USER_NAME}/graphs/{GRAPH_ID}/20220703"
+
+new_pixel_data = {
+    "quantity": "3.18"
+}
+
+response = requests.put(url=update_endpoint, json=new_pixel_data, headers=headers)
 print(response.text)
