@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 USER_NAME = "kuljotbiring"
 TOKEN = "pixelaapipass90210"
@@ -41,8 +42,12 @@ headers = {
 # make a data point on the graph
 data_endpoint = f"{pixela_endpoint}/{USER_NAME}/graphs/{GRAPH_ID}"
 
+today = datetime.now()
+
 data_config = {
-    "date": "20220703",
+    # use date format to change datetime format to API specs
+    # https://www.w3schools.com/python/gloss_python_date_format_codes.asp
+    "date": today.strftime("%Y%m%d"),
     "quantity": "6.25",
 }
 
