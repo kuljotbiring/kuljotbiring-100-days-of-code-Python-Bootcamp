@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+import os
 
 APP_ID = "b54e4ff0"
 
@@ -9,6 +10,9 @@ GENDER = "male"
 WEIGHT_KG = 90.7
 HEIGHT_CM = 177.8
 AGE = 40
+
+USERNAME = os.environ.get("SHEETY_USER")
+PASSWORD = os.environ.get("SHEETY_PASSWORD")
 
 sheety_url = "https://api.sheety.co/e16bd98df5e37971e300376e218ae6fe/workoutTracking/workouts"
 
@@ -50,3 +54,6 @@ for exercise in result["exercises"]:
     sheet_response = requests.post(sheety_url, json=sheet_inputs)
 
     print(sheet_response.text)
+
+# Basic Authentication
+sheet_response = requests.post(sheety_url, json=sheet_inputs, auth=(USERNAME,PASSWORD,))
