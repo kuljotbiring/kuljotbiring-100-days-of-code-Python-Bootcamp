@@ -1,11 +1,3 @@
-import os
-env_var = 'KIWI_API'
-if env_var in os.environ:
-    print(f"{env_var} value is {os.environ[env_var]}")
-else:
-    print(f"{env_var} does not exist")
-
-print(os.environ.get('KIWI_API'))
 # 4. Pass the data back to the main.py file, so that you can print the data from main.py
 from data_manager import DataManager
 data_manager = DataManager()
