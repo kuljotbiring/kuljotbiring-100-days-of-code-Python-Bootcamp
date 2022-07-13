@@ -31,7 +31,7 @@ class FlightSearch:
             "flight_type": "round",
             "one_for_city": 1,
             "max_stopovers": 0,
-            "curr": "GBP"
+            "curr": "USD"
         }
 
         response = requests.get(
