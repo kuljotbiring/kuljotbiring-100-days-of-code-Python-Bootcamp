@@ -22,7 +22,7 @@ if sheet_data[0]["iataCode"] == "":
     city_names = [row["city"] for row in sheet_data]
     print(city_names)
     codes = flight_search.get_destination_code(city_names)
-    data_manager.update_destination_codes(codes)
+    data_manager.update_destination_codes()
     sheet_data = data_manager.get_destination_data()
 
 tomorrow = datetime.now() + timedelta(days=1)
