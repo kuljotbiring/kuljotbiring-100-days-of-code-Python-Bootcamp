@@ -28,20 +28,30 @@ if sheet_data[0]["iataCode"] == "":
 tomorrow = datetime.now() + timedelta(days=1)
 six_month_from_today = datetime.now() + timedelta(days=(6 * 30))
 
-for destination in sheet_data:
+destinations = {
+    data["iataCode"]: {
+        "id": data["id"],
+        "city": data["city"],
+        "price": data["lowestPrice"]
+    } for data in sheet_data}
+
+for destination_code in sheet_data:
     flight = flight_search.check_flights(
         ORIGIN_CITY_IATA,
-        destination["iataCode"],
+        destination_code,
         from_time=tomorrow,
         to_time=six_month_from_today
     )
-
+    print(flight.price)
     if flight is None:
         continue
 
-    if flight.price < destination["lowestPrice"]:
+    if flight.price < destinations[destination_code]["lowestPrice"]:
+        users = data_manager.get_customer_emails()
+        emails = [row["email"] for row in users]
+        names = [row["firstName"] for row in users]
 
-        message=f"Low price alert! Only £{flight.price} to fly from {flight.origin_city}-{flight.origin_airport} "
+        message=f"Low price alert! Only ${flight.price} to fly from {flight.origin_city}-{flight.origin_airport} "
         f"to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to "
         f"{flight.return_date}."
 
@@ -49,5 +59,7 @@ for destination in sheet_data:
             message += f"\nFlight has {flight.stop_overs} stop over, via {flight.via_city}."
             print(message)
 
-        notification_manager.send_sms(message)
+        link = f"https://www.google.com/flights?hl=en#flt={flight.origin_airport}.{flight.destination_airport}." \
+               f"{flight.out_date}*{flight.destination_airport}.{flight.origin_airport}.{flight.return_date}"
+        notification_manager.send_emails(emails, message, link)
 
