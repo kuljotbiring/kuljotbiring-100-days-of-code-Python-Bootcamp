@@ -2,6 +2,7 @@ body {
     margin: 0;
     text-align: center;
     font-family: 'Merriweather', serif;
+    color: #40514E;
 }
 
 h1 {
@@ -16,6 +17,7 @@ h2 {
     font-size: 2.5rem;
     color: #66BFBF;
     font-weight: normal;
+    padding-bottom: 10px;
 }
 
 h3 {
@@ -33,11 +35,18 @@ h3, a {
 }
 
 .middle-container {
-
+    margin: 100px 0;
 }
 
 .bottom-container {
 
+}
+
+hr {
+    border: dotted #EAF6F6 6px;
+    border-bottom: none;
+    width: 4%;
+    margin: 100px auto;
 }
 
 span {
@@ -47,20 +56,24 @@ span {
 .top-cloud {
     position: absolute;
     right: 300px;
-    top: 50px;
+    top: 40px;
 }
 
 .bottom-cloud {
     position: absolute;
-    left: 300px;
+    left: 250px;
     bottom: 300px;
+}
+
+p {
+    line-height: 2;
 }
 
 .skill-row {
     width: 50%;
     margin: 100px auto 100px auto;
     text-align: left;
-    line-height: 2;
+
 }
 
 .code{
@@ -76,5 +89,16 @@ span {
 }
 
 .itsme {
-    width: 25%;
+    width: 17%;
+    border-radius: 50%;
+}
+
+.intro {
+    width: 30%;
+    margin: auto;
+}
+
+.contact-me {
+    width: 40%;
+    margin: 40px auto 60px;
 }
