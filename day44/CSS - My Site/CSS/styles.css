@@ -28,6 +28,17 @@ h3, a {
     color: #11999E;
 }
 
+a {
+    color: #11999E;
+    font-family: 'Montserrat', sans-serif;
+    margin 10px 20px;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #EAF6F6;
+}
+
 .top-container {
     background-color: #E7F6F2;
     position: relative;
