@@ -141,3 +141,9 @@ p {
   background-image: linear-gradient(to bottom, #30e3cb, #2bc4ad);
   text-decoration: none;
 }
+
+.copyright {
+    color: #EAF6F6;
+    font-size: 0.75rem;
+    padding 20px 0px;
+}
