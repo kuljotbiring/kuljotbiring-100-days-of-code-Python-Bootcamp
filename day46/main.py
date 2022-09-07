@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 import requests
 
 year = input("Which year do you want to travel to? Type the date in this format YYYY-MM-DD: ")
