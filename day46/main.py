@@ -1,7 +1,20 @@
 from bs4 import BeautifulSoup
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 import requests
+
+YOUR_UNIQUE_CLIENT_ID = "enter client ID"
+YOUR_UNIQUE_CLIENT_SECRET = "enter client secret"
+
+sp = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        scope="playlist-modify-private",
+        redirect_uri="http://example.com",
+        client_id=YOUR_UNIQUE_CLIENT_ID,
+                                     client_secret=YOUR_UNIQUE_CLIENT_SECRET,
+                                                                      show_dialog=True,
+                                                                                  cache_path="token.txt"))
+user_id = sp.current_user()["id"]
 
 year = input("Which year do you want to travel to? Type the date in this format YYYY-MM-DD: ")
 
