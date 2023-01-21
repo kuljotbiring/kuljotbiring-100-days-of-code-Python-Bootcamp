@@ -1,6 +1,7 @@
 import requests
 import lxml
 from bs4 import BeautifulSoup
+import smtplib
 
 # find the URL of the product I want to track
 url = "https://www.amazon.com/LG-34UM69G-B-34-Inch-UltraWide-Reduction/dp/B06XFXX5JH/ref=sr_1_19?content-id=amzn1" \
@@ -26,3 +27,20 @@ price = soup.find(name="span", class_="a-price-whole").get_text()
 # price_without_currency = price.split("$")[1]
 price_as_float = float(price)
 print(f"${price_as_float}")
+
+title = soup.find(id="productTitle").get_text().strip()
+print(title)
+
+BUY_PRICE = 350
+
+if price_as_float < BUY_PRICE:
+    message = f"{title} is now {price}"
+
+    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        connection.starttls()
+        result = connection.login("YOUR_EMAIL", "YOUR_PASSWORD")
+        connection.sendmail(
+            from_addr="YOUR_EMAIL",
+            to_addrs="YOUR_EMAIL",
+            msg=f"Subject:Amazon Price Alert!\n\n{message}\n{url}"
+        )
