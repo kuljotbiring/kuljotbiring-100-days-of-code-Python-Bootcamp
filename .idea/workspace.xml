@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f570d23-1647-4901-bef5-e24c01726416" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/kuljotbiring-100-days-of-code-Python-Bootcamp/day8/Project: Caesar Cipher/cipher.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kuljotbiring-100-days-of-code-Python-Bootcamp/day47/amzn_price_tracker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kuljotbiring-100-days-of-code-Python-Bootcamp" beforeDir="false" afterPath="$PROJECT_DIR$/kuljotbiring-100-days-of-code-Python-Bootcamp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
