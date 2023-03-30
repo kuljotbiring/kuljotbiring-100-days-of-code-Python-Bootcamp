@@ -1,4 +1,4 @@
-# 4. Pass the data back to the main.py file, so that you can print the data from main.py
+# 4. Pass the data back to the amzn price scraper.py file, so that you can print the data from amzn price scraper.py
 from datetime import datetime, timedelta
 from data_manager import DataManager
 from flight_search import FlightSearch
@@ -12,7 +12,7 @@ notification_manager = NotificationManager()
 
 ORIGIN_CITY_IATA = "SFO"
 
-#  5. In main.py check if sheet_data contains any values for the "iataCode" key.
+#  5. In amzn price scraper.py check if sheet_data contains any values for the "iataCode" key.
 #  If not, then the IATA Codes column is empty in the Google Sheet.
 #  In this case, pass each city name in sheet_data one-by-one
 #  to the FlightSearch class to get the corresponding IATA code

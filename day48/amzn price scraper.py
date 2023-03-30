@@ -16,3 +16,4 @@ print(f'${dollars.text}.{cents.text}')
 # close the browser - using driver.quit() will close all tabs
 driver.close()
 
+# get list of dates:
