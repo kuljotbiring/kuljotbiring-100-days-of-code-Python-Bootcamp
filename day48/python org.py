@@ -20,3 +20,5 @@ for i in range(1, 6):
     time_place[event_time.text] = event_location.text
 
 print(time_place)
+
+driver.close()
