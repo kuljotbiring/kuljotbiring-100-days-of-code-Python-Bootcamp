@@ -32,7 +32,18 @@ def get_score():
     return num_cookies
 
 
-def get_prices():
+def buy_upgrades():
+    """Attempt to buy the upgrade available if have enough cookies"""
+    # loop through and save prices in a list
+    for i in range(4, -1, -1):
+        try:
+            upgrade = driver.find_element(By.XPATH, f'//*[@id="upgrade{i}"]')
+            upgrade.click()
+        except:
+            pass
+
+
+def product_prices():
     """Get the current product prices"""
     # list to store prices
     price_list = []
@@ -50,7 +61,7 @@ def get_prices():
 def buy_products():
     """Attempts to buy most expensive items with the amount of cookies remaining"""
     cookies = get_score()
-    prices = get_prices()
+    prices = product_prices()
     i = len(prices) - 1
     while cookies >= prices[0]:
         if cookies >= prices[i]:
@@ -62,7 +73,7 @@ def buy_products():
         else:
             i -= 1
         cookies = get_score()
-        prices = get_prices()
+        prices = product_prices()
 
 
 # save the path to the Chrome Driver as a variable
@@ -79,6 +90,7 @@ english.click()
 while True:
     sleep(5)
     click_cookie()
+    buy_upgrades()
     buy_products()
 
 
