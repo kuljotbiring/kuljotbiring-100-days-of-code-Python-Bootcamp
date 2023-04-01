@@ -7,13 +7,24 @@ from time import sleep
 
 
 def play_game():
-    sleep(7)
+    """ Function waits for page to load. Find cookies and clicks repeatedly for 5 mins
+    it contains a .05 sleep to allow multiple clicks"""
+    sleep(5)
     cookie = driver.find_element(By.XPATH, '//*[@id="bigCookie"]')
-    end_time = time.time() + 300
+    end_time = time.time() + 10
     while time.time() < end_time:
-        sleep(.1)
+        sleep(.02)
         cookie.click()
 
+
+def get_score():
+    """get the number of cookies earned by grabbing the element
+    and performing string operations to get the total cookie count"""
+    curr_score = driver.find_element(By.ID, "cookies")
+    score_text = str(curr_score.text)
+    cookie_score = score_text.split()
+    num_cookies = cookie_score[0]
+    return num_cookies
 
 # save the path to the Chrome Driver as a variable
 service = Service("/Applications/chromedriver")
@@ -28,3 +39,5 @@ english.click()
 
 while True:
     play_game()
+
+
