@@ -1,4 +1,5 @@
-from selenium import webdriver
+import selenium
+from selenium import webdriver, common
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -6,12 +7,11 @@ import time
 from time import sleep
 
 
-def play_game():
-    """ Function waits for page to load. Find cookies and clicks repeatedly for 5 mins
+def click_cookie():
+    """Find cookies and clicks repeatedly for 5 mins
     it contains a .05 sleep to allow multiple clicks"""
-    sleep(5)
     cookie = driver.find_element(By.XPATH, '//*[@id="bigCookie"]')
-    end_time = time.time() + 10
+    end_time = time.time() + 60
     while time.time() < end_time:
         sleep(.02)
         cookie.click()
@@ -19,12 +19,51 @@ def play_game():
 
 def get_score():
     """get the number of cookies earned by grabbing the element
-    and performing string operations to get the total cookie count"""
+    and performing string operations to get the total cookie count
+    formats the web-element to just the number of cookies and removes any commas
+    in the raw_cookies variable"""
     curr_score = driver.find_element(By.ID, "cookies")
     score_text = str(curr_score.text)
     cookie_score = score_text.split()
-    num_cookies = cookie_score[0]
+    raw_cookies = cookie_score[0]
+    # remove commas so number can be processed as integer
+    num_cookies = int(''.join(c for c in raw_cookies if c.isdigit()))
+
     return num_cookies
+
+
+def get_prices():
+    """Get the current product prices"""
+    # list to store prices
+    price_list = []
+    # loop through and save prices in a list
+    for i in range(0, 19):
+        try:
+            item = driver.find_element(By.XPATH, f'//*[@id="productPrice{i}"]')
+            price_list.append(int(item.text))
+        except:
+            pass
+
+    return price_list
+
+
+def buy_products():
+    """Attempts to buy most expensive items with the amount of cookies remaining"""
+    cookies = get_score()
+    prices = get_prices()
+    i = len(prices) - 1
+    while cookies >= prices[0]:
+        if cookies >= prices[i]:
+            try:
+                item_to_buy = driver.find_element(By.XPATH, f'//*[@id="product{i}"]')
+                item_to_buy.click()
+            except:
+                continue
+        else:
+            i -= 1
+        cookies = get_score()
+        prices = get_prices()
+
 
 # save the path to the Chrome Driver as a variable
 service = Service("/Applications/chromedriver")
@@ -38,6 +77,9 @@ english = driver.find_element(By.XPATH, '//*[@id="langSelect-EN"]')
 english.click()
 
 while True:
-    play_game()
+    sleep(5)
+    click_cookie()
+    buy_products()
+
 
 
