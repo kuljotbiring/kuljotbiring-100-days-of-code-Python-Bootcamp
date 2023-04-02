@@ -47,8 +47,11 @@ def product_prices():
     for i in range(0, 19):
         try:
             item = driver.find_element(By.XPATH, f'//*[@id="productPrice{i}"]')
-            price_list.append(int(item.text))
-        except:
+            item = str(item.text)
+            item = (''.join(c for c in item if c.isdigit()))
+            item = int(item)
+            price_list.append(item)
+        except ValueError:
             pass
 
     return price_list
@@ -88,7 +91,7 @@ end_time = time.time() + 300
 
 while time.time() < end_time:
     # save the 5 seconds to check what we can buy
-    end_click_time = time.time() + 10
+    end_click_time = time.time() + 15
     while time.time() < end_click_time:
         click_cookie(cookie)
     buy_upgrades()
