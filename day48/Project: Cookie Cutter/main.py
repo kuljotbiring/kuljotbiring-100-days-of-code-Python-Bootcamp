@@ -28,15 +28,21 @@ def get_score():
     return num_cookies
 
 
+def upgrade_prices():
+    # list to store prices
+    upgrade_costs = []
+
 def buy_upgrades():
     """Attempt to buy the upgrade available if have enough cookies"""
     # loop through and save prices in a list
+    upgrades = driver.find_elements(By.ID, "upgrades")
     for i in range(4, -1, -1):
         try:
             upgrade = driver.find_element(By.XPATH, f'//*[@id="upgrade{i}"]')
             upgrade.click()
+            break
         except:
-            pass
+            continue
 
 
 def product_prices():
@@ -67,6 +73,7 @@ def buy_products():
             try:
                 item_to_buy = driver.find_element(By.XPATH, f'//*[@id="product{i}"]')
                 item_to_buy.click()
+                break
             except:
                 continue
         else:
@@ -87,11 +94,11 @@ english = driver.find_element(By.XPATH, '//*[@id="langSelect-EN"]')
 english.click()
 sleep(5)
 cookie = driver.find_element(By.XPATH, '//*[@id="bigCookie"]')
-end_time = time.time() + 300
+end_time = time.time() + 1200
 
 while time.time() < end_time:
     # save the 5 seconds to check what we can buy
-    end_click_time = time.time() + 15
+    end_click_time = time.time() + 60
     while time.time() < end_click_time:
         click_cookie(cookie)
     buy_upgrades()
