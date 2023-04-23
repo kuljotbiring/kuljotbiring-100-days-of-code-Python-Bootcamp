@@ -15,3 +15,14 @@ driver = webdriver.Chrome(service=service)
 # open up a webpage
 driver.get("https://www.linkedin.com/login")
 driver.maximize_window()
+
+# find and save the user name and password fields
+user_name = driver.find_element(By.ID, "username")
+password = driver.find_element(By.ID, "password")
+
+# click into the username field
+user_name.click()
+user_name.send_keys("ksbiring1@gmail.com")
+
+
+
