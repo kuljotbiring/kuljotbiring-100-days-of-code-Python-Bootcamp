@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+import os
 import time
 
 login_screen = "https://www.linkedin.com/login"
@@ -16,13 +17,21 @@ driver = webdriver.Chrome(service=service)
 driver.get("https://www.linkedin.com/login")
 driver.maximize_window()
 
-# find and save the user name and password fields
+# find and save the username and password fields
 user_name = driver.find_element(By.ID, "username")
 password = driver.find_element(By.ID, "password")
 
-# click into the username field
+
+# click into the username field and enter username
 user_name.click()
-user_name.send_keys("ksbiring1@gmail.com")
+user_name.send_keys(os.environ.get("USERNAME"))
+
+# click into the password field and enter password
+password.click()
+password.send_keys(os.environ.get("PASSWORD"))
+
+while True:
+    pass
 
 
 
